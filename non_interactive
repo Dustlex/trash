@@ -1,0 +1,51 @@
+#include <iostream>
+#include <cmath>
+
+class PowerCalculator {
+private:
+    int n;       // Основание
+    int k;       // Степень
+    int result;  // Результат возведения в степень
+    static int objectCount;  // Количество созданных объектов
+
+public:
+    // Конструктор
+    PowerCalculator(int base, int exponent) : n(base), k(exponent) {
+        result = static_cast<int>(pow(n, k));
+        objectCount++;
+    }
+
+    // Метод для получения результата
+    int getResult() const {
+        return result;
+    }
+
+    // Метод для расчета нового значения степени
+    void calculateNewExponent(int newExponent) {
+        k = newExponent;
+        result = static_cast<int>(pow(n, k));
+    }
+
+    // Статический метод для получения количества созданных объектов
+    static int getObjectCount() {
+        return objectCount;
+    }
+};
+
+// Инициализация статической переменной
+int PowerCalculator::objectCount = 0;
+
+int main() {
+    PowerCalculator pc1(2, 3);
+    std::cout << "2^3 = " << pc1.getResult() << std::endl;
+    
+    PowerCalculator pc2(5, 2);
+    std::cout << "5^2 = " << pc2.getResult() << std::endl;
+    
+    pc2.calculateNewExponent(3);
+    std::cout << "5^3 = " << pc2.getResult() << std::endl;
+    
+    std::cout << "Number of objects created: " << PowerCalculator::getObjectCount() << std::endl;
+    
+    return 0;
+}
