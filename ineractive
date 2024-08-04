@@ -1,0 +1,65 @@
+#include <iostream>
+#include <cmath>
+
+class PowerCalculator {
+private:
+    int n;       // Основание
+    int k;       // Степень
+    int result;  // Результат возведения в степень
+    static int objectCount;  // Количество созданных объектов
+
+public:
+    // Конструктор
+    PowerCalculator(int base, int exponent) : n(base), k(exponent) {
+        result = static_cast<int>(pow(n, k));
+        objectCount++;
+    }
+
+    // Метод для получения результата
+    int getResult() const {
+        return result;
+    }
+
+    // Метод для расчета нового значения степени
+    void calculateNewExponent(int newExponent) {
+        k = newExponent;
+        result = static_cast<int>(pow(n, k));
+    }
+
+    // Статический метод для получения количества созданных объектов
+    static int getObjectCount() {
+        return objectCount;
+    }
+};
+
+// Инициализация статической переменной
+int PowerCalculator::objectCount = 0;
+
+int main() {
+    int n, k;
+
+    // Запрашиваем у пользователя значения n и k
+    std::cout << "Введите число n: ";
+    std::cin >> n;
+    std::cout << "Введите степень k: ";
+    std::cin >> k;
+
+    // Создаем объект PowerCalculator
+    PowerCalculator pc(n, k);
+
+    // Выводим результат
+    std::cout << n << "^" << k << " = " << pc.getResult() << std::endl;
+
+    // Запрашиваем новое значение степени
+    std::cout << "Введите новую степень k: ";
+    std::cin >> k;
+
+    // Пересчитываем результат с новой степенью
+    pc.calculateNewExponent(k);
+    std::cout << n << "^" << k << " = " << pc.getResult() << std::endl;
+
+    // Выводим количество созданных объектов
+    std::cout << "Количество созданных объектов: " << PowerCalculator::getObjectCount() << std::endl;
+
+    return 0;
+}
